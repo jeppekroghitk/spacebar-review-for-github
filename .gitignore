@@ -1,0 +1,10 @@
+.DS_Store
+.idea/
+.claude/
+
+# Built by dev/build.mjs; belongs on a release, not in the tree.
+dist/
+
+# Packages made by hand before the release workflow.
+*.zip
+*.xpi

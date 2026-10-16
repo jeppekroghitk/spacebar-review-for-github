@@ -1,0 +1,29 @@
+name: ci
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  package:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      # The build refuses a manifest pointing at a missing file, or a content script that does not
+      # parse, so a typo is caught here rather than in a store review.
+      - name: Package for every browser
+        run: node dev/build.mjs all
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: packages
+          path: |
+            dist/*.xpi
+            dist/*.zip
+          if-no-files-found: error
